@@ -54,6 +54,8 @@ cwcwidth==0.1.6
     #   curtsies
 decli==0.5.2
     # via commitizen
+distlib==0.3.4
+    # via virtualenv
 django==4.0.1
     # via
     #   -r requirements.in
@@ -68,6 +70,10 @@ docutils==0.17.1
     #   readme-renderer
     #   restructuredtext-lint
     #   sphinx
+filelock==3.4.2
+    # via
+    #   tox
+    #   virtualenv
 flake8==4.0.1
     # via -r requirements.in
 freezegun==1.1.0
@@ -108,6 +114,7 @@ packaging==21.3
     #   bleach
     #   commitizen
     #   sphinx
+    #   tox
 pathspec==0.9.0
     # via black
 pbr==5.8.0
@@ -121,9 +128,15 @@ pipdeptree==2.2.1
 pkginfo==1.8.2
     # via twine
 platformdirs==2.4.1
-    # via black
+    # via
+    #   black
+    #   virtualenv
+pluggy==1.0.0
+    # via tox
 prompt-toolkit==3.0.24
     # via questionary
+py==1.11.0
+    # via tox
 pycodestyle==2.8.0
     # via flake8
 pycparser==2.21
@@ -170,6 +183,8 @@ six==1.16.0
     #   bleach
     #   blessings
     #   python-dateutil
+    #   tox
+    #   virtualenv
 snowballstemmer==2.2.0
     # via sphinx
 sphinx==4.4.0
@@ -192,12 +207,16 @@ stevedore==3.5.0
     # via doc8
 termcolor==1.1.0
     # via commitizen
+toml==0.10.2
+    # via tox
 tomli==1.2.3
     # via
     #   black
     #   pep517
 tomlkit==0.8.0
     # via commitizen
+tox==3.24.5
+    # via -r requirements.in
 tqdm==4.62.3
     # via twine
 twine==3.7.1
@@ -209,6 +228,8 @@ typing-extensions==4.0.1
     #   commitizen
 urllib3==1.26.8
     # via requests
+virtualenv==20.13.0
+    # via tox
 wcwidth==0.2.5
     # via prompt-toolkit
 webencodings==0.5.1

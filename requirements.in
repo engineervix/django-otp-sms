@@ -18,6 +18,7 @@ pip-tools
 
 # test
 coverage
+tox
 
 #  docs
 sphinx
