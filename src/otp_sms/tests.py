@@ -12,18 +12,18 @@ from .conf import settings
 class CustomSMSDeviceMixin:
     def setUp(self):
         try:
-            alice = self.create_user('alice', 'password')
-            bob = self.create_user('bob', 'password')
+            alice = self.create_user("alice", "password")
+            bob = self.create_user("bob", "password")
         except IntegrityError:
             self.skipTest("Unable to create test users.")
         else:
-            self.device = alice.CustomSMSDevice_set.create(number='test')
-            self.device2 = bob.CustomSMSDevice_set.create(number='test')
+            self.device = alice.customsmsdevice_set.create(number="test")
+            self.device2 = bob.customsmsdevice_set.create(number="test")
 
 
 @override_settings(
     OTP_SMS_NO_DELIVERY=True,
-    OTP_SMS_CHALLENGE_MESSAGE='{token}',
+    OTP_SMS_CHALLENGE_MESSAGE="{token}",
     OTP_SMS_THROTTLE_FACTOR=0,
 )
 class TestCustomSMS(CustomSMSDeviceMixin, TestCase):
@@ -33,7 +33,7 @@ class TestCustomSMS(CustomSMSDeviceMixin, TestCase):
         self._delivered = None
 
     def test_instant(self):
-        """ Verify a code the instant it was generated. """
+        """Verify a code the instant it was generated."""
         with freeze_time():
             token = self.device.generate_challenge()
             ok = self.device.verify_token(token)
@@ -41,7 +41,7 @@ class TestCustomSMS(CustomSMSDeviceMixin, TestCase):
         self.assertTrue(ok)
 
     def test_barely_made_it(self):
-        """ Verify a code at the last possible second. """
+        """Verify a code at the last possible second."""
         with freeze_time() as frozen_time:
             token = self.device.generate_challenge()
             frozen_time.tick(delta=(settings.OTP_SMS_TOKEN_VALIDITY - 1))
@@ -50,7 +50,7 @@ class TestCustomSMS(CustomSMSDeviceMixin, TestCase):
         self.assertTrue(ok)
 
     def test_too_late(self):
-        """ Try to verify a code one second after it expires. """
+        """Try to verify a code one second after it expires."""
         with freeze_time() as frozen_time:
             token = self.device.generate_challenge()
             frozen_time.tick(delta=(settings.OTP_SMS_TOKEN_VALIDITY + 1))
@@ -59,7 +59,7 @@ class TestCustomSMS(CustomSMSDeviceMixin, TestCase):
         self.assertFalse(ok)
 
     def test_code_reuse(self):
-        """ Try to verify the same code twice. """
+        """Try to verify the same code twice."""
         with freeze_time():
             token = self.device.generate_challenge()
             ok1 = self.device.verify_token(token)
@@ -77,13 +77,15 @@ class TestCustomSMS(CustomSMSDeviceMixin, TestCase):
 
     @override_settings(
         OTP_SMS_NO_DELIVERY=False,
-        OTP_SMS_TOKEN_TEMPLATE='Token is {token}',
+        OTP_SMS_TOKEN_TEMPLATE="Token is {token}",
     )
     def test_format(self):
-        with mock.patch('otp_sms.models.CustomSMSDevice._deliver_token', self._deliver_token):
+        with mock.patch(
+            "otp_sms.models.CustomSMSDevice._deliver_token", self._deliver_token
+        ):
             self.device.generate_challenge()
 
-        self.assertEqual('Token is {}'.format(self.device.token), self._delivered)
+        self.assertEqual("Token is {}".format(self.device.token), self._delivered)
 
     #
     # Utilities
