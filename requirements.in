@@ -1,0 +1,28 @@
+# core
+requests
+django-otp
+
+# dev
+black
+bpython
+commitizen
+bumpversion
+django
+doc8
+flake8
+invoke
+freezegun
+isort==5.*
+pipdeptree
+pip-tools
+
+# test
+coverage
+
+#  docs
+sphinx
+
+# dist
+setuptools
+twine
+wheel
